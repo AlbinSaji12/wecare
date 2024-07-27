@@ -9,23 +9,39 @@ class DepartmentModel(models.Model):
     
     class Meta:
         db_table = "doctordepartment"
-        
+    def __str__(self):
+        return self.department_name
+
+
 
 class DoctorModel(models.Model):
+    DAYS_OF_WEEK = [
+        ('MO', 'Monday'),
+        ('TU', 'Tuesday'),
+        ('WE', 'Wednesday'),
+        ('TH', 'Thursday'),
+        ('FR', 'Friday'),
+        ('SA', 'Saturday'),
+        ('SU', 'Sunday'),
+    ]
+
     doctor_id = models.IntegerField(primary_key=True)
     doctor_name = models.CharField(max_length=30)
-    doctor_specialization = models.ForeignKey(DepartmentModel,on_delete=models.CASCADE)
+    doctor_specialization = models.ForeignKey('DepartmentModel', on_delete=models.CASCADE)
     doctor_phone = models.CharField(max_length=30)
     doctor_email = models.EmailField()
     doctor_image = models.ImageField(upload_to='image')
-    date = models.DateField(null=True)
+    start_date = models.CharField(max_length=2, choices=DAYS_OF_WEEK, null=True)
+    end_date = models.CharField(max_length=2, choices=DAYS_OF_WEEK, null=True)
     time = models.TimeField(null=True)
-    password = models.CharField(max_length=30,null=True)
+    password = models.CharField(max_length=30, null=True)
     status = models.CharField(max_length=30)
-    
 
     class Meta:
         db_table = "doctor"
+    def __str__(self):
+        return self.doctor_name
+     
 
 
 
